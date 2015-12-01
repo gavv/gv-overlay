@@ -1,8 +1,8 @@
 app-emacs
 app-misc
-dev-cpp
 dev-libs
 dev-python
+dev-util
 net-im
 sci-libs
 x11-misc

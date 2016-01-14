@@ -21,20 +21,12 @@ DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/${PN}_v${PV}"
 
-src_prepare() {
-	epatch "${FILESDIR}"/"${PN}"-"${PV}"-o4.patch
-}
-
 src_configure() {
-	if is-flagq "-O3" ; then
-		replace-flags "-O3" "-O2"
-	fi
-
 	if use debug; then
 		mycmakeargs="-DDEBUG:STRING=ON"
 		CMAKE_BUILD_TYPE="Debug"
 	else
-		mycmakeargs="-DDEBUG:STRING=OFF -DCMAKE_C_FLAGS_RELEASE:STRING=-O2"
+		mycmakeargs="-DDEBUG:STRING=OFF"
 		CMAKE_BUILD_TYPE="Release"
 	fi
 

@@ -17,5 +17,5 @@ IUSE=""
 
 RDEPEND=""
 DEPEND="${RDEPEND}
-    dev-python/blessings
+	dev-python/blessings
 	dev-python/setuptools[${PYTHON_USEDEP}]"

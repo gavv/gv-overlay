@@ -4,5 +4,6 @@ dev-libs
 dev-python
 dev-util
 net-im
+net-wireless
 sci-libs
 x11-misc

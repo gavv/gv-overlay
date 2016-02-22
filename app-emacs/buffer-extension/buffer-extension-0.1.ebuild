@@ -1,11 +1,10 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI=4
-EGIT_REPO_URI="https://github.com/emacsmirror/buffer-extension.git"
 
-inherit elisp git-2
+inherit elisp
 
 DESCRIPTION="Some enhanced functions for buffer manipulate"
 HOMEPAGE="http://www.emacswiki.org/emacs/buffer-extension.el"
@@ -18,3 +17,8 @@ KEYWORDS="amd64 x86"
 IUSE=""
 
 SITEFILE="50${PN}-gentoo.el"
+
+src_unpack() {
+	mkdir -p "${S}"
+	cp "${FILESDIR}/${PV}/${PN}.el" "${S}"
+}

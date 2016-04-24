@@ -37,7 +37,7 @@ src_prepare() {
 		Makefile || die
 
 	epatch "${FILESDIR}"/${PN}-4.5-xft-2.patch
-    epatch "${FILESDIR}"/${PN}-4.5-xft-height.patch
+	epatch "${FILESDIR}"/${PN}-4.5-xft-height.patch
 
 	epatch_user
 }

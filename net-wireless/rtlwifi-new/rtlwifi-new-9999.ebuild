@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=5
-inherit git-2 linux-mod
+inherit git-2 linux-mod linux-info
 
 DESCRIPTION="Newest Realtek rtlwifi codes (rtl8192, rtl8188, rtl8723, rtl8821)"
 HOMEPAGE="https://github.com/lwfinger/rtlwifi_new"
@@ -39,11 +39,19 @@ MODULE_NAMES="
   rtl8192ce(${D}/rtl8192ce:${S}/rtl8192ce)
   rtl8188ee(${D}/rtl8188ee:${S}/rtl8188ee)"
 
+pkg_setup() {
+	linux-info_pkg_setup
+	linux-mod_pkg_setup
+}
+
 src_compile() {
+	export KVER="${KV_FULL}"
 	emake
 }
 
 src_install() {
+	export KVER="${KV_FULL}"
+
 	linux-mod_src_install
 
 	if use firmware; then

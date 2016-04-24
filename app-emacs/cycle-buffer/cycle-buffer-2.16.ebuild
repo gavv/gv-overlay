@@ -13,7 +13,7 @@ SRC_URI="https://enise.org/users/victor/share/distfiles/${P}.el.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64"
+KEYWORDS="~amd64"
 IUSE=""
 
 SITEFILE="50${PN}-gentoo.el"

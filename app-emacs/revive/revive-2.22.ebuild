@@ -1,23 +1,19 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Id$
 
-EAPI=4
+EAPI=5
 
 inherit elisp
 
 DESCRIPTION="Resume Emacs"
 HOMEPAGE="http://www.gentei.org/~yuuji/software/"
-SRC_URI=""
+# taken from http://www.gentei.org/~yuuji/software/euc/revive.el
+SRC_URI="https://enise.org/users/victor/share/distfiles/${P}.el.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="amd64"
 IUSE=""
 
 SITEFILE="50${PN}-gentoo.el"
-
-src_unpack() {
-	mkdir -p "${S}"
-	cp "${FILESDIR}/${PV}/${PN}.el" "${S}"
-}

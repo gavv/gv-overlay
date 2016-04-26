@@ -1,2 +1,2 @@
 (add-to-list 'load-path "@SITELISP@")
-(autoload 'revive "revive")
+(load "revive-autoloads" nil t)

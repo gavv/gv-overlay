@@ -1,2 +1,2 @@
 (add-to-list 'load-path "@SITELISP@")
-(autoload 'basic-toolkit "basic-toolkit")
+(load "basic-toolkit-autoloads" nil t)

@@ -1,2 +1,2 @@
 (add-to-list 'load-path "@SITELISP@")
-(autoload 'windows "windows")
+(load "windows-autoloads" nil t)

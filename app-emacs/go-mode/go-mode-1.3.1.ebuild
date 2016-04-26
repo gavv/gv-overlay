@@ -11,9 +11,10 @@ HOMEPAGE="https://github.com/dominikh/go-mode.el"
 SRC_URI=""
 
 EGIT_REPO_URI="https://github.com/dominikh/go-mode.el.git"
+EGIT_COMMIT="v${PV}"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64"
 
 SITEFILE="50${PN}-gentoo.el"

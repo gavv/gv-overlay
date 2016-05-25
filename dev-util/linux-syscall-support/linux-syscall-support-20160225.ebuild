@@ -4,13 +4,12 @@
 
 EAPI=6
 
-_sha="348bdf8d32b37c8fb2627df7a0a977d1d640e1fc"
-
 inherit eutils
 
 DESCRIPTION="A header file that can be included to make direct system calls"
 HOMEPAGE="https://chromium.googlesource.com/linux-syscall-support/"
-SRC_URI="https://chromium.googlesource.com/linux-syscall-support/+archive/${_sha}.tar.gz -> linux-syscall-support-${PV}.tar.gz"
+# from https://chromium.googlesource.com/linux-syscall-support/+archive/348bdf8d32b37c8fb2627df7a0a977d1d640e1fc.tar.gz
+SRC_URI="https://enise.org/users/victor/share/distfiles/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -23,7 +22,7 @@ RDEPEND=""
 src_unpack() {
 	mkdir "${S}"
 	cd "${S}"
-	unpack "linux-syscall-support-${PV}.tar.gz"
+	unpack "${P}.tar.gz"
 }
 
 src_install() {

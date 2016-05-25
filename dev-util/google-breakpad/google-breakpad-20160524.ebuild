@@ -4,13 +4,12 @@
 
 EAPI=6
 
-_sha="79901bb99d5f5bdfc8ed7e422250a9d008b941a1"
-
 inherit eutils
 
 DESCRIPTION="Client and server components which implement a crash-reporting system"
 HOMEPAGE="https://chromium.googlesource.com/breakpad/breakpad"
-SRC_URI="https://chromium.googlesource.com/breakpad/breakpad/+archive/${_sha}.tar.gz -> google-breakpad-${PV}.tar.gz"
+# from https://chromium.googlesource.com/breakpad/breakpad/+archive/79901bb99d5f5bdfc8ed7e422250a9d008b941a1.tar.gz
+SRC_URI="https://enise.org/users/victor/share/distfiles/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -26,7 +25,7 @@ RDEPEND=""
 src_unpack() {
 	mkdir "${S}"
 	cd "${S}"
-	unpack "google-breakpad-${PV}.tar.gz"
+	unpack "${P}.tar.gz"
 }
 
 src_prepare() {

@@ -6,14 +6,14 @@ EAPI=6
 
 inherit eutils
 
-DESCRIPTION="Linux Syscall Support -- a header file that can be included to make direct system calls"
+DESCRIPTION="Linux Syscall Support -- helpers to make direct system calls"
 HOMEPAGE="https://chromium.googlesource.com/linux-syscall-support/"
 # from https://chromium.googlesource.com/linux-syscall-support/+archive/348bdf8d32b37c8fb2627df7a0a977d1d640e1fc.tar.gz
 SRC_URI="https://enise.org/users/victor/share/distfiles/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=""

@@ -6,14 +6,14 @@ EAPI=6
 
 inherit eutils
 
-DESCRIPTION="Google Breakpad -- client and server components which implement a crash-reporting system"
+DESCRIPTION="Google Breakpad -- client and server components of a crash-reporting system"
 HOMEPAGE="https://chromium.googlesource.com/breakpad/breakpad"
 # from https://chromium.googlesource.com/breakpad/breakpad/+archive/79901bb99d5f5bdfc8ed7e422250a9d008b941a1.tar.gz
 SRC_URI="https://enise.org/users/victor/share/distfiles/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="

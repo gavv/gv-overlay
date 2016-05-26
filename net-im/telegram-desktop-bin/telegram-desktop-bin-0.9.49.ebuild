@@ -6,7 +6,7 @@ EAPI=6
 
 inherit eutils gnome2-utils fdo-mime
 
-DESCRIPTION="Official desktop client for Telegram, a cloud-based messaging app (binary version)"
+DESCRIPTION="Official desktop client for Telegram. Binary package"
 HOMEPAGE="https://desktop.telegram.org"
 SRC_URI="(
 	https://github.com/telegramdesktop/tdesktop/archive/v${PV}.tar.gz -> tdesktop-${PV}.tar.gz

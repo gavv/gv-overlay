@@ -1,14 +1,14 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 
 EBZR_REPO_URI="lp:~unity-team/${PN}/trunk"
 EBZR_REVISION="312"
 
-inherit autotools base eutils autotools python-r1 vala bzr
+inherit autotools eutils autotools python-r1 vala bzr
 
 DESCRIPTION="Library for instrumenting and integrating with all aspects of the Unity shell"
 HOMEPAGE="https://launchpad.net/libunity"
@@ -20,7 +20,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-DEPEND=">=dev-libs/dee-1.2.5:=
+DEPEND=">=dev-libs/dee-1.2.5:=[introspection]
 	dev-libs/libdbusmenu:=
 	dev-libs/libgee:0
 	x11-libs/gtk+:3
@@ -32,7 +32,7 @@ src_prepare() {
 	# Fix compile error
 	find . -type f -exec sed -i 's/ListStore/Gtk.ListStore/' {} \;
 
-	base_src_prepare
+	default
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"
 	eautoreconf

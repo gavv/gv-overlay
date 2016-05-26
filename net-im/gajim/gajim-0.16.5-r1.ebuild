@@ -78,6 +78,11 @@ RESTRICT="test"
 
 S="${WORKDIR}"/${MY_P}
 
+PATCHES=(
+	"${FILESDIR}"/${P}-desktop.patch
+	"${FILESDIR}"/${P}-keycode.patch
+	)
+
 src_prepare() {
 	autotools-utils_src_prepare
 	python_copy_sources

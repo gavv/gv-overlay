@@ -16,7 +16,7 @@ SRC_URI="(
 	http://download.qt-project.org/official_releases/qt/${_qtver_short}/$_qtver/single/qt-everywhere-opensource-src-${_qtver}.tar.xz
 )"
 
-LICENSE="GPL-3"
+LICENSE="GPL-3" # FIXME
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="gtkstyle -debug"
@@ -54,22 +54,22 @@ RDEPEND="
 
 	dev-libs/openssl:0
 	net-libs/libproxy
+	>=sys-apps/dbus-1.4.20
 
+	sys-libs/zlib[minizip]
 	dev-db/sqlite
 	x11-libs/libva
 	>=media-libs/openal-1.17.2
 	virtual/ffmpeg[opus]
 	media-libs/opus
-	sys-libs/zlib[minizip]
+	media-libs/libwebp
 	dev-util/google-breakpad
 	x11-themes/hicolor-icon-theme
 "
 DEPEND="${RDEPEND}
-	>=sys-apps/dbus-1.4.20
 	dev-libs/libunity
 	dev-libs/libappindicator:3
 	media-libs/libexif
-	media-libs/libwebp
 "
 
 QSTATIC="${WORKDIR}"/Libraries/QtStatic
@@ -138,7 +138,6 @@ src_configure() {
 			-no-lgmon \
 			-no-mtdev \
 			-no-journald \
-			-no-gif \
 			-no-nis \
 			${opts} \
 			-static \

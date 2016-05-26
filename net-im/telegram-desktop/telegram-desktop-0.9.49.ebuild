@@ -19,11 +19,11 @@ SRC_URI="(
 LICENSE="GPL-3" # FIXME
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="gtkstyle -debug"
+IUSE="kde4 -debug"
 
 QTCORE_DEPEND="
 	dev-libs/glib:2
-	>=dev-libs/libpcre-8.38
+	>=dev-libs/libpcre-8.38[pcre16]
 	>=sys-libs/zlib-1.2.5
 	virtual/libiconv
 	dev-libs/icu
@@ -33,10 +33,6 @@ QTGUI_DEPEND="
 	media-libs/fontconfig
 	>=media-libs/freetype-2.6.1:2
 	>=media-libs/harfbuzz-1.0.6[icu]
-	gtkstyle? (
-		x11-libs/gtk+:2
-		x11-libs/pango
-	)
 	virtual/jpeg:0
 	dev-libs/libinput
 	media-libs/libpng:0
@@ -71,19 +67,18 @@ RDEPEND="
 	${QTDBUS_DEPEND}
 	sys-libs/zlib[minizip]
 	dev-db/sqlite
-	x11-libs/libva
+	dev-libs/breakpad
 	>=media-libs/openal-1.17.2
 	virtual/ffmpeg[opus]
 	media-libs/opus
 	media-libs/libwebp
-	dev-libs/breakpad
+	x11-libs/libva
 	x11-themes/hicolor-icon-theme
 "
 
 DEPEND="${RDEPEND}
 	dev-libs/libunity
 	dev-libs/libappindicator:3
-	media-libs/libexif
 "
 
 QSTATIC="${WORKDIR}"/Libraries/QtStatic
@@ -114,12 +109,6 @@ src_prepare() {
 src_configure() {
 	einfo "Configuring Qt ${_qtver}"
 	cd "${QSTATIC}"
-	opts=""
-	if use gtkstyle; then
-		opts="${opts} -gtkstyle"
-	else
-		opts="${opts} -no-gtkstyle"
-	fi
 	./configure -prefix "${WORKDIR}/qt" \
 			-release \
 			-opensource \
@@ -153,7 +142,7 @@ src_configure() {
 			-no-mtdev \
 			-no-journald \
 			-no-nis \
-			${opts} \
+			-no-gtkstyle \
 			-static \
 			-nomake examples \
 			-nomake tests || die
@@ -236,6 +225,11 @@ src_install() {
 
 	insinto /usr/share/applications
 	doins "${S}"/lib/xdg/telegramdesktop.desktop
+
+	if use kde4; then
+		insinto /usr/share/kde4/services
+		doins "${S}"/lib/xdg/tg.protocol
+	fi
 }
 
 pkg_postinst() {

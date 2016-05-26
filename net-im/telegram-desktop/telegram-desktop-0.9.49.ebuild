@@ -9,7 +9,7 @@ _qtver_short=5.6
 
 inherit eutils gnome2-utils fdo-mime
 
-DESCRIPTION="Desktop client of Telegram, the messaging app"
+DESCRIPTION="Official desktop client for Telegram, a cloud-based messaging app"
 HOMEPAGE="https://desktop.telegram.org"
 SRC_URI="(
 	https://github.com/telegramdesktop/tdesktop/archive/v${PV}.tar.gz -> tdesktop-${PV}.tar.gz
@@ -18,16 +18,18 @@ SRC_URI="(
 
 LICENSE="GPL-3" # FIXME
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE="gtkstyle -debug"
 
-RDEPEND="
+QTCORE_DEPEND="
 	dev-libs/glib:2
 	>=dev-libs/libpcre-8.38
 	>=sys-libs/zlib-1.2.5
 	virtual/libiconv
 	dev-libs/icu
+"
 
+QTGUI_DEPEND="
 	media-libs/fontconfig
 	>=media-libs/freetype-2.6.1:2
 	>=media-libs/harfbuzz-1.0.6[icu]
@@ -37,7 +39,6 @@ RDEPEND="
 	)
 	virtual/jpeg:0
 	dev-libs/libinput
-	x11-libs/libxkbcommon
 	media-libs/libpng:0
 	virtual/libudev
 	x11-libs/libICE
@@ -51,11 +52,23 @@ RDEPEND="
 	x11-libs/xcb-util-keysyms
 	x11-libs/xcb-util-renderutil
 	x11-libs/xcb-util-wm
+"
 
-	dev-libs/openssl:0
+QTNETWORK_DEPEND="
 	net-libs/libproxy
-	>=sys-apps/dbus-1.4.20
+	dev-libs/openssl:0
+"
 
+QTDBUS_DEPEND="
+	>=sys-apps/dbus-1.4.20
+"
+
+RDEPEND="
+	!net-im/telegram-desktop-bin
+	${QTCORE_DEPEND}
+	${QTGUI_DEPEND}
+	${QTNETWORK_DEPEND}
+	${QTDBUS_DEPEND}
 	sys-libs/zlib[minizip]
 	dev-db/sqlite
 	x11-libs/libva
@@ -66,6 +79,7 @@ RDEPEND="
 	dev-libs/breakpad
 	x11-themes/hicolor-icon-theme
 "
+
 DEPEND="${RDEPEND}
 	dev-libs/libunity
 	dev-libs/libappindicator:3

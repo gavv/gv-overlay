@@ -6,7 +6,7 @@ EAPI=6
 
 inherit eutils
 
-DESCRIPTION="Client and server components which implement a crash-reporting system"
+DESCRIPTION="Google Breakpad -- client and server components which implement a crash-reporting system"
 HOMEPAGE="https://chromium.googlesource.com/breakpad/breakpad"
 # from https://chromium.googlesource.com/breakpad/breakpad/+archive/79901bb99d5f5bdfc8ed7e422250a9d008b941a1.tar.gz
 SRC_URI="https://enise.org/users/victor/share/distfiles/${P}.tar.gz"
@@ -18,7 +18,7 @@ IUSE=""
 
 DEPEND="
 	virtual/awk
-	dev-util/linux-syscall-support
+	dev-libs/lss
 "
 RDEPEND=""
 
@@ -30,5 +30,5 @@ src_unpack() {
 
 src_prepare() {
 	default
-	ln -s /usr/include/linux_syscall_support ./src/third_party/lss
+	ln -s /usr/include/lss ./src/third_party/lss
 }

@@ -6,7 +6,7 @@ EAPI=6
 
 inherit eutils
 
-DESCRIPTION="A header file that can be included to make direct system calls"
+DESCRIPTION="Linux Syscall Support -- a header file that can be included to make direct system calls"
 HOMEPAGE="https://chromium.googlesource.com/linux-syscall-support/"
 # from https://chromium.googlesource.com/linux-syscall-support/+archive/348bdf8d32b37c8fb2627df7a0a977d1d640e1fc.tar.gz
 SRC_URI="https://enise.org/users/victor/share/distfiles/${P}.tar.gz"
@@ -26,6 +26,6 @@ src_unpack() {
 }
 
 src_install() {
-	insinto /usr/include/linux_syscall_support
+	insinto /usr/include/lss
 	doins linux_syscall_support.h
 }

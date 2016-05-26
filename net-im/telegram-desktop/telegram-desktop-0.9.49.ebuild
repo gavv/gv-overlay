@@ -63,7 +63,7 @@ RDEPEND="
 	virtual/ffmpeg[opus]
 	media-libs/opus
 	media-libs/libwebp
-	dev-util/google-breakpad
+	dev-libs/breakpad
 	x11-themes/hicolor-icon-theme
 "
 DEPEND="${RDEPEND}

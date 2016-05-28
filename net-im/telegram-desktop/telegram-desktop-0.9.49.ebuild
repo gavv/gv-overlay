@@ -11,12 +11,12 @@ inherit eutils gnome2-utils fdo-mime
 
 DESCRIPTION="Official desktop client for Telegram, a cloud-based messaging app"
 HOMEPAGE="https://desktop.telegram.org"
-SRC_URI="(
+SRC_URI="
 	https://github.com/telegramdesktop/tdesktop/archive/v${PV}.tar.gz -> tdesktop-${PV}.tar.gz
 	http://download.qt-project.org/official_releases/qt/${_qtver_short}/$_qtver/single/qt-everywhere-opensource-src-${_qtver}.tar.xz
-)"
+"
 
-LICENSE="GPL-3" # FIXME
+LICENSE="telegram"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="kde4 -debug"
@@ -87,28 +87,28 @@ S="${WORKDIR}/tdesktop-${PV}"
 
 src_unpack() {
 	unpack "qt-everywhere-opensource-src-${_qtver}.tar.xz"
-	mkdir -p "${WORKDIR}"/Libraries
-	mv "qt-everywhere-opensource-src-${_qtver}" "${QSTATIC}"
+	mkdir -p "${WORKDIR}"/Libraries || die
+	mv "qt-everywhere-opensource-src-${_qtver}" "${QSTATIC}" || die
 
-	cd "${WORKDIR}"
+	cd "${WORKDIR}" || die
 	unpack "tdesktop-${PV}.tar.gz"
 
-	cd "${S}"
+	cd "${S}" || die
 }
 
 src_prepare() {
 	default
 
-	cd "${QSTATIC}/qtbase"
+	cd "${QSTATIC}/qtbase" || die
 	epatch "${S}/Telegram/Patches/qtbase_${_qtver//./_}.diff"
 
-	cd "${S}"
+	cd "${S}" || die
 	epatch "${FILESDIR}/${P}-qmake.patch"
 }
 
 src_configure() {
 	einfo "Configuring Qt ${_qtver}"
-	cd "${QSTATIC}"
+	cd "${QSTATIC}" || die
 	./configure -prefix "${WORKDIR}/qt" \
 			-release \
 			-opensource \
@@ -150,29 +150,29 @@ src_configure() {
 
 src_compile() {
 	einfo "Building Qt ${_qtver}"
-	cd "${QSTATIC}"
+	cd "${QSTATIC}" || die
 	emake module-qtbase module-qtimageformats
 	emake module-qtbase-install_subtargets module-qtimageformats-install_subtargets
 	export PATH="${WORKDIR}/qt/bin:$PATH"
 
 	einfo "Building codegen_style"
-	mkdir -p "${S}"/Linux/obj/codegen_style/Debug
+	mkdir -p "${S}"/Linux/obj/codegen_style/Debug || die
 	cd "${S}"/Linux/obj/codegen_style/Debug
 	qmake CONFIG+=debug ../../../../Telegram/build/qmake/codegen_style/codegen_style.pro \
 		|| die
 	emake
 
 	einfo "Building codegen_numbers"
-	mkdir -p "${S}"/Linux/obj/codegen_numbers/Debug
-	cd "${S}"/Linux/obj/codegen_numbers/Debug
+	mkdir -p "${S}"/Linux/obj/codegen_numbers/Debug || die
+	cd "${S}"/Linux/obj/codegen_numbers/Debug || die
 	qmake CONFIG+=debug \
 		../../../../Telegram/build/qmake/codegen_numbers/codegen_numbers.pro \
 		|| die
 	emake
 
 	einfo "Building MetaLang"
-	mkdir -p "${S}"/Linux/DebugIntermediateLang
-	cd "${S}"/Linux/DebugIntermediateLang
+	mkdir -p "${S}"/Linux/DebugIntermediateLang || die
+	cd "${S}"/Linux/DebugIntermediateLang || die
 	qmake CONFIG+=debug ../../Telegram/MetaLang.pro \
 		|| die
 	emake
@@ -200,8 +200,8 @@ src_compile() {
 		variant="debug"
 		output="DebugIntermediate"
 	fi
-	mkdir -p "${S}/Linux/${output}"
-	cd "${S}/Linux/${output}"
+	mkdir -p "${S}/Linux/${output}" || die
+	cd "${S}/Linux/${output}" || die
 	qmake \
 		CONFIG+="${variant}" \
 		DEFINES+=TDESKTOP_DISABLE_AUTOUPDATE \

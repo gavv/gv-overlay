@@ -23,12 +23,12 @@ DEPEND="
 RDEPEND=""
 
 src_unpack() {
-	mkdir "${S}"
-	cd "${S}"
+	mkdir "${S}" || die
+	cd "${S}" || die
 	unpack "${P}.tar.gz"
 }
 
 src_prepare() {
 	default
-	ln -s /usr/include/lss ./src/third_party/lss
+	ln -s /usr/include/lss ./src/third_party/lss || die
 }

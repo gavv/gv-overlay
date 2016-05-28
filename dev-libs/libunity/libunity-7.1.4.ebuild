@@ -11,6 +11,7 @@ inherit autotools eutils autotools python-r1 vala
 
 DESCRIPTION="Library for instrumenting and integrating with all aspects of the Unity shell"
 HOMEPAGE="https://launchpad.net/libunity"
+# from http://bazaar.launchpad.net/~unity-team/libunity/trunk/tarball/${_rev}
 SRC_URI="https://enise.org/users/victor/share/distfiles/libunity-${_rev}.tar.gz"
 
 LICENSE="LGPL-3"

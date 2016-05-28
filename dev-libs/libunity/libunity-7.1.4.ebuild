@@ -5,20 +5,18 @@
 EAPI=6
 PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 
-EBZR_REPO_URI="lp:~unity-team/${PN}/trunk"
-EBZR_REVISION="312"
+_rev="324"
 
-inherit autotools eutils autotools python-r1 vala bzr
+inherit autotools eutils autotools python-r1 vala
 
 DESCRIPTION="Library for instrumenting and integrating with all aspects of the Unity shell"
 HOMEPAGE="https://launchpad.net/libunity"
-SRC_URI=""
+SRC_URI="https://enise.org/users/victor/share/distfiles/libunity-${_rev}.tar.gz"
 
-LICENSE="GPL-3"
+LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
-RESTRICT="mirror"
 
 DEPEND=">=dev-libs/dee-1.2.5:=[introspection]
 	dev-libs/libdbusmenu:=
@@ -28,10 +26,9 @@ DEPEND=">=dev-libs/dee-1.2.5:=[introspection]
 	$(vala_depend)"
 RDEPEND="${DEPEND}"
 
-src_prepare() {
-	# Fix compile error
-	find . -type f -exec sed -i 's/ListStore/Gtk.ListStore/' {} \;
+S="${WORKDIR}/~unity-team/libunity/trunk"
 
+src_prepare() {
 	default
 	vala_src_prepare
 	export VALA_API_GEN="$VAPIGEN"

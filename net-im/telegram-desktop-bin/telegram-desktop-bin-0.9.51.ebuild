@@ -19,6 +19,9 @@ SLOT="0"
 KEYWORDS="-* ~amd64 ~x86"
 IUSE=""
 
+QA_PREBUILT="usr/bin/telegram-desktop"
+QA_PRESTRIPPED="usr/bin/telegram-desktop"
+
 RDEPEND="
 	>=sys-apps/dbus-1.4.20
 	dev-libs/glib:2

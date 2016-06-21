@@ -7,7 +7,7 @@ EAPI=6
 _qtver=5.6.0
 _qtver_short=5.6
 
-inherit eutils gnome2-utils fdo-mime
+inherit eutils gnome2-utils xdg
 
 DESCRIPTION="Official desktop client for Telegram, a cloud-based messaging app"
 HOMEPAGE="https://desktop.telegram.org"
@@ -104,6 +104,8 @@ src_prepare() {
 
 	cd "${S}" || die
 	epatch "${FILESDIR}/${P}-qmake.patch"
+
+	xdg_src_prepare
 }
 
 src_configure() {
@@ -231,7 +233,17 @@ src_install() {
 	fi
 }
 
+pkg_preinst() {
+	xdg_pkg_preinst
+	gnome2_icon_savelist
+}
+
 pkg_postinst() {
-	fdo-mime_desktop_database_update
+	xdg_pkg_postinst
+	gnome2_icon_cache_update
+}
+
+pkg_postrm() {
+	xdg_pkg_postrm
 	gnome2_icon_cache_update
 }

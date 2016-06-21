@@ -4,7 +4,7 @@
 
 EAPI=6
 
-inherit eutils gnome2-utils fdo-mime
+inherit eutils gnome2-utils xdg
 
 DESCRIPTION="Official desktop client for Telegram (binary package)"
 HOMEPAGE="https://desktop.telegram.org"
@@ -20,7 +20,6 @@ KEYWORDS="-* ~amd64 ~x86"
 IUSE=""
 
 QA_PREBUILT="usr/bin/telegram-desktop"
-QA_PRESTRIPPED="usr/bin/telegram-desktop"
 
 RDEPEND="
 	>=sys-apps/dbus-1.4.20
@@ -33,8 +32,12 @@ DEPEND=""
 
 S="${WORKDIR}/Telegram"
 
+src_prepare() {
+	xdg_src_prepare
+}
+
 src_install() {
-	newbin "${WORKDIR}/Telegram/Telegram" telegram-desktop
+	newbin "${S}/Telegram" telegram-desktop
 
 	for icon_size in 16 32 48 64 128 256 512; do
 		newicon -s "${icon_size}" \
@@ -45,7 +48,17 @@ src_install() {
 	domenu "${WORKDIR}/tdesktop-${PV}"/lib/xdg/telegramdesktop.desktop
 }
 
+pkg_preinst() {
+	xdg_pkg_preinst
+	gnome2_icon_savelist
+}
+
 pkg_postinst() {
-	fdo-mime_desktop_database_update
+	xdg_pkg_postinst
+	gnome2_icon_cache_update
+}
+
+pkg_postrm() {
+	xdg_pkg_postrm
 	gnome2_icon_cache_update
 }

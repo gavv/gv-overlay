@@ -203,6 +203,7 @@ src_compile() {
 	mkdir -p "${S}/Linux/${output}" || die
 	cd "${S}/Linux/${output}" || die
 	qmake \
+		QT_TDESKTOP_PATH="../../../qt" \
 		CONFIG+="${variant}" \
 		DEFINES+=TDESKTOP_DISABLE_AUTOUPDATE \
 		DEFINES+=TDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME \
@@ -217,14 +218,12 @@ src_install() {
 	fi
 	newbin "${S}/Linux/${output}/Telegram" telegram-desktop
 
-	insopts -m644
 	for icon_size in 16 32 48 64 128 256 512; do
 		newicon -s "${icon_size}" "${S}/Telegram/Resources/art/icon${icon_size}.png" \
 			telegram-desktop.png
 	done
 
-	insinto /usr/share/applications
-	doins "${S}"/lib/xdg/telegramdesktop.desktop
+	domenu "${WORKDIR}/tdesktop-${PV}"/lib/xdg/telegramdesktop.desktop
 
 	if use kde4; then
 		insinto /usr/share/kde4/services

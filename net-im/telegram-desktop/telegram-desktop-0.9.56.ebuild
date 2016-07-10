@@ -23,27 +23,27 @@ IUSE="kde4 -debug"
 
 QTCORE_DEPEND="
 	dev-libs/glib:2
+	dev-libs/icu
 	>=dev-libs/libpcre-8.38[pcre16]
 	>=sys-libs/zlib-1.2.5
 	virtual/libiconv
-	dev-libs/icu
 "
 
 QTGUI_DEPEND="
+	dev-libs/libinput
 	media-libs/fontconfig
 	>=media-libs/freetype-2.6.1:2
 	>=media-libs/harfbuzz-1.0.6[icu]
-	virtual/jpeg:0
-	dev-libs/libinput
 	media-libs/libpng:0
+	virtual/jpeg:0
 	virtual/libudev
 	x11-libs/libICE
 	x11-libs/libSM
+	>=x11-libs/libxcb-1.10[xkb]
+	>=x11-libs/libxkbcommon-0.4.1[X]
 	x11-libs/libX11
 	>=x11-libs/libXi-1.7.4
 	x11-libs/libXrender
-	>=x11-libs/libxcb-1.10[xkb]
-	>=x11-libs/libxkbcommon-0.4.1[X]
 	x11-libs/xcb-util-image
 	x11-libs/xcb-util-keysyms
 	x11-libs/xcb-util-renderutil
@@ -51,8 +51,8 @@ QTGUI_DEPEND="
 "
 
 QTNETWORK_DEPEND="
-	net-libs/libproxy
 	dev-libs/openssl:0
+	net-libs/libproxy
 "
 
 QTDBUS_DEPEND="
@@ -65,20 +65,19 @@ RDEPEND="
 	${QTGUI_DEPEND}
 	${QTNETWORK_DEPEND}
 	${QTDBUS_DEPEND}
-	sys-libs/zlib[minizip]
 	dev-db/sqlite
-	dev-libs/breakpad
-	>=media-libs/openal-1.17.2
-	virtual/ffmpeg[opus]
-	media-libs/opus
 	media-libs/libwebp
-	x11-libs/libva
+	>=media-libs/openal-1.17.2
+	media-libs/opus
+	sys-libs/zlib[minizip]
+	virtual/ffmpeg[opus]
 	x11-themes/hicolor-icon-theme
+	x11-libs/libva
 "
 
 DEPEND="${RDEPEND}
-	dev-libs/libunity
 	dev-libs/libappindicator:3
+	dev-libs/libunity
 "
 
 QSTATIC="${WORKDIR}"/Libraries/QtStatic
@@ -151,6 +150,14 @@ src_configure() {
 }
 
 src_compile() {
+	if use debug; then
+		variant="debug"
+		output="Debug"
+	else
+		variant="release"
+		output="Release"
+	fi
+
 	einfo "Building Qt ${_qtver}"
 	cd "${QSTATIC}" || die
 	emake module-qtbase module-qtimageformats
@@ -158,66 +165,66 @@ src_compile() {
 	export PATH="${WORKDIR}/qt/bin:$PATH"
 
 	einfo "Building codegen_style"
-	mkdir -p "${S}"/Linux/obj/codegen_style/Debug || die
-	cd "${S}"/Linux/obj/codegen_style/Debug
-	qmake CONFIG+=debug ../../../../Telegram/build/qmake/codegen_style/codegen_style.pro \
+	mkdir -p "${S}/Linux/obj/codegen_style/${output}" || die
+	cd "${S}/Linux/obj/codegen_style/${output}"
+	qmake CONFIG+="${variant}" \
+		../../../../Telegram/build/qmake/codegen_style/codegen_style.pro \
 		|| die
 	emake
 
 	einfo "Building codegen_numbers"
-	mkdir -p "${S}"/Linux/obj/codegen_numbers/Debug || die
-	cd "${S}"/Linux/obj/codegen_numbers/Debug || die
-	qmake CONFIG+=debug \
+	mkdir -p "${S}/Linux/obj/codegen_numbers/${output}" || die
+	cd "${S}/Linux/obj/codegen_numbers/${output}" || die
+	qmake CONFIG+="${variant}" \
 		../../../../Telegram/build/qmake/codegen_numbers/codegen_numbers.pro \
 		|| die
 	emake
 
 	einfo "Building MetaLang"
-	mkdir -p "${S}"/Linux/DebugIntermediateLang || die
-	cd "${S}"/Linux/DebugIntermediateLang || die
-	qmake CONFIG+=debug ../../Telegram/MetaLang.pro \
+	mkdir -p "${S}/Linux/${output}IntermediateLang" || die
+	cd "${S}/Linux/${output}IntermediateLang" || die
+	qmake CONFIG+="${variant}" ../../Telegram/MetaLang.pro \
 		|| die
 	emake
 
 	einfo "Generating code"
-	../codegen/Debug/codegen_style \
+	"../codegen/${output}/codegen_style" \
 		"-I./../../Telegram/Resources" \
 		"-I./../../Telegram/SourceFiles" \
 		"-o./../../Telegram/GeneratedFiles/styles" \
 		all_files.style --rebuild \
 		|| die
-	../codegen/Debug/codegen_numbers \
+	"../codegen/${output}/codegen_numbers" \
 		"-o./../../Telegram/GeneratedFiles" \
 		"./../../Telegram/Resources/numbers.txt" \
 		|| die
-	../DebugLang/MetaLang \
+	"../${output}Lang/MetaLang" \
 		-lang_in ./../../Telegram/Resources/langs/lang.strings \
 		-lang_out ./../../Telegram/GeneratedFiles/lang_auto \
 		|| die
 
 	einfo "Building Telegram Desktop"
-	variant="release"
-	output="ReleaseIntermediate"
-	if use debug; then
-		variant="debug"
-		output="DebugIntermediate"
-	fi
 	mkdir -p "${S}/Linux/${output}" || die
 	cd "${S}/Linux/${output}" || die
 	qmake \
 		QT_TDESKTOP_PATH="../../../qt" \
+		QT_TDESKTOP_VERSION="${_qtver}" \
 		CONFIG+="${variant}" \
 		DEFINES+=TDESKTOP_DISABLE_AUTOUPDATE \
 		DEFINES+=TDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME \
+		DEFINES+=TDESKTOP_DISABLE_CRASH_REPORTS \
+		DEFINES+=TDESKTOP_DISABLE_UNITY_INTEGRATION \
 		../../Telegram/Telegram.pro || die
 	emake
 }
 
 src_install() {
-	output="Release"
 	if use debug; then
 		output="Debug"
+	else
+		output="Release"
 	fi
+
 	newbin "${S}/Linux/${output}/Telegram" telegram-desktop
 
 	for icon_size in 16 32 48 64 128 256 512; do

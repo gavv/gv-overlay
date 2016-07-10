@@ -19,7 +19,7 @@
  CONFIG += precompile_header
  
  PRECOMPILED_HEADER = ./SourceFiles/stdafx.h
-@@ -418,16 +413,16 @@ CONFIG(debug, debug|release) {
+@@ -418,16 +413,15 @@ CONFIG(debug, debug|release) {
  include(qt_static.pri)
  
  INCLUDEPATH += \
@@ -30,8 +30,7 @@
 -               ./ThirdParty/minizip\
 -               ./../../Libraries/breakpad/src
 +               /usr/include/opus\
-+               /usr/include/minizip\
-+               /usr/include/breakpad
++               /usr/include/minizip
  
 -INCLUDEPATH += "/usr/include/libappindicator-0.1"
 -INCLUDEPATH += "/usr/include/gtk-2.0"
@@ -49,7 +48,7 @@
 -LIBS += /usr/local/lib/libz.a
 -LIBS += /usr/local/lib/libxkbcommon.a
 -LIBS += ./../../../Libraries/breakpad/src/client/linux/libbreakpad_client.a
-+LIBS += -lminizip -lz -lxkbcommon -lcrypto -lssl -lbreakpad_client
++LIBS += -lminizip -lz -lxkbcommon -lcrypto -lssl
  
  RESOURCES += \
      ./Resources/telegram.qrc \

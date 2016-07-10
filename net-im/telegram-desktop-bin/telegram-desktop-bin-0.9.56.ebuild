@@ -22,9 +22,9 @@ IUSE=""
 QA_PREBUILT="usr/bin/telegram-desktop"
 
 RDEPEND="
-	>=sys-apps/dbus-1.4.20
 	dev-libs/glib:2
 	dev-libs/gobject-introspection
+	>=sys-apps/dbus-1.4.20
 	x11-libs/libX11
 	>=x11-libs/libxcb-1.10[xkb]
 "
@@ -32,17 +32,13 @@ DEPEND=""
 
 S="${WORKDIR}/Telegram"
 
-src_prepare() {
-	xdg_src_prepare
-}
-
 src_install() {
 	newbin "${S}/Telegram" telegram-desktop
 
 	for icon_size in 16 32 48 64 128 256 512; do
 		newicon -s "${icon_size}" \
-				"${WORKDIR}/tdesktop-${PV}/Telegram/Resources/art/icon${icon_size}.png" \
-				telegram-desktop.png
+			"${WORKDIR}/tdesktop-${PV}/Telegram/Resources/art/icon${icon_size}.png" \
+			telegram-desktop.png
 	done
 
 	domenu "${WORKDIR}/tdesktop-${PV}"/lib/xdg/telegramdesktop.desktop

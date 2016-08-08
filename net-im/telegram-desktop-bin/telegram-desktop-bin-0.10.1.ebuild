@@ -4,14 +4,12 @@
 
 EAPI=6
 
-inherit eutils gnome2-utils versionator xdg
-
-_short_ver="$(get_version_component_range 1-2 ${PV})"
+inherit eutils gnome2-utils xdg
 
 DESCRIPTION="Official desktop client for Telegram (binary package)"
 HOMEPAGE="https://desktop.telegram.org"
 SRC_URI="
-	https://github.com/telegramdesktop/tdesktop/archive/v${_short_ver}.tar.gz -> tdesktop-${PV}.tar.gz
+	https://github.com/telegramdesktop/tdesktop/archive/v${PV}.tar.gz -> tdesktop-${PV}.tar.gz
 	amd64? ( https://updates.tdesktop.com/tlinux/tsetup.${PV}.tar.xz )
 	x86? ( https://updates.tdesktop.com/tlinux32/tsetup32.${PV}.tar.xz )
 "
@@ -40,11 +38,11 @@ src_install() {
 	local icon_size
 	for icon_size in 16 32 48 64 128 256 512; do
 		newicon -s "${icon_size}" \
-			"${WORKDIR}/tdesktop-${_short_ver}/Telegram/Resources/art/icon${icon_size}.png" \
+			"${WORKDIR}/tdesktop-${PV}/Telegram/Resources/art/icon${icon_size}.png" \
 			telegram-desktop.png
 	done
 
-	newmenu "${WORKDIR}/tdesktop-${_short_ver}"/lib/xdg/telegramdesktop.desktop telegram-desktop.desktop
+	newmenu "${WORKDIR}/tdesktop-${PV}"/lib/xdg/telegramdesktop.desktop telegram-desktop.desktop
 }
 
 pkg_preinst() {

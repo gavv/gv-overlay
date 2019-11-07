@@ -43,9 +43,3 @@ src_configure() {
 	)
 	cmake-utils_src_configure
 }
-
-src_install() {
-	cmake-utils_src_install
-	elog "Removing bash completions for rc"
-	rm "${D}/usr/share/bash-completion/completions/rc" || die
-}

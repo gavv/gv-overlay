@@ -4,7 +4,7 @@
 EAPI=5
 EGIT_REPO_URI="https://github.com/gavv/editing-helpers.el.git"
 
-inherit elisp git-2
+inherit elisp git-r3
 
 DESCRIPTION="Editing helper functions for Emacs."
 HOMEPAGE="https://github.com/gavv/editing-helpers.el"

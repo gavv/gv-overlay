@@ -5,7 +5,7 @@
 EAPI=4
 EGIT_REPO_URI="https://github.com/winterTTr/ace-jump-mode.git"
 
-inherit elisp git-2
+inherit elisp git-r3
 
 DESCRIPTION="Ace jump mode is a minor mode of emacs, which help you to move the cursor within Emacs."
 HOMEPAGE="https://github.com/winterTTr/ace-jump-mode"

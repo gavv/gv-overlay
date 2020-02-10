@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=5
-inherit git-2 linux-mod linux-info
+inherit git-r3 linux-mod linux-info
 
 DESCRIPTION="Newest Realtek rtlwifi codes (rtl8192, rtl8188, rtl8723, rtl8821)"
 HOMEPAGE="https://github.com/lwfinger/rtlwifi_new"

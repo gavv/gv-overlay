@@ -5,7 +5,7 @@
 EAPI=4
 EGIT_REPO_URI="https://github.com/danamlund/emacs-no-easy-keys.git"
 
-inherit elisp git-2
+inherit elisp git-r3
 
 DESCRIPTION="An Emacs mode to help you learn the proper Emacs movement keys"
 HOMEPAGE="http://danamlund.dk/emacs/no-easy-keys.html"
